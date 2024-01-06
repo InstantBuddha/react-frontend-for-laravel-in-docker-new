@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import {
     FTextInput,
     FCheckbox,
-    FORM_ITEMS,
+    SIGN_UP_FORM_ITEMS,
     VALIDATION_MESSAGES,
-} from "./FormStuff";
+} from "../../utils/FormStuff";
 import "../../styles/formik-styles.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
-    const fInitValues = FORM_ITEMS.reduce((result, obj) => {
+    const [errorCodeToDisplay, setErrorCodeToDisplay] = useState("Unkown error");
+
+    const fInitValues = SIGN_UP_FORM_ITEMS.reduce((result, obj) => {
         return { ...result, [obj.itemName]: obj.initialValue };
     }, {});
 
-    const fValidationSchema = FORM_ITEMS.reduce((result, item) => {
+    const fValidationSchema = SIGN_UP_FORM_ITEMS.reduce((result, item) => {
         if (item.inputType === "text") {
             let schema = Yup.string()
                 .max(item.max, VALIDATION_MESSAGES.max)
@@ -54,7 +56,7 @@ export default function Signup() {
         return {}; //just to get rid of the warning message
     }, {});
 
-    const formInputs = FORM_ITEMS.map((item) => {
+    const formInputs = SIGN_UP_FORM_ITEMS.map((item) => {
         if (item.inputType === "text") {
             return (
                 <FTextInput
@@ -118,11 +120,13 @@ export default function Signup() {
                 error.response ? error.response.data : error.message
             ); //remove after testing
             //console.log(error.response.status); //remove after testing
-            console.log(error);
+            console.log(error); //remove after testing
             setSubmitting(false);
+            const errorCodeToDisplay = error.response.status
             if(error.response){
-                navigate(`/failure/${error.response.status}`);
+                setErrorCodeToDisplay(error.response.status)
             }            
+            navigate(`/failure/${errorCodeToDisplay}`);
         }
     };
 

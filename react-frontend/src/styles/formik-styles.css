@@ -58,7 +58,9 @@
     margin: 1rem calc((100vw / 25) * 10);
     background-color: white;
     font-weight: 400;
-    line-height: 1.563;    
+    line-height: 1.563;
+    max-width: 30rem;
+    text-align: left; 
   }
   
   
@@ -172,7 +174,8 @@
   
   input[type="email"],
   input[type="text"],
-  input[type="number"] {
+  input[type="number"],
+  input[type="password"] {
     padding: 0.65rem 0.5rem;
     font-size: 1rem;
     border: 2px solid var(--gray-200);
@@ -187,7 +190,8 @@
   @media (prefers-color-scheme: dark) {
     input[type="email"],
     input[type="text"],
-    input[type="number"] {
+    input[type="number"],
+    input[type="password"] {
       background-color: var(--gray-800);
       border-color: var(--gray-700);
       color: white;
@@ -205,6 +209,7 @@
   input[type="email"],
   input[type="text"],
   input[type="number"],
+  input[type="password"],
   textarea,
   select {
     width: 400px;

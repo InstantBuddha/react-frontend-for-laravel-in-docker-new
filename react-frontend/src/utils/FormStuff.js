@@ -1,6 +1,6 @@
 import { useField } from "formik";
 
-export const FORM_ITEMS = [
+export const SIGN_UP_FORM_ITEMS = [
   {
     itemName: "name",
     inputType: "text",
@@ -93,10 +93,33 @@ export const FORM_ITEMS = [
   },
 ];
 
+export const ADMIN_LOG_IN_FORM_ITEMS = [
+  {
+    itemName: "email",
+    inputType: "email",
+    initialValue: "",
+    label: "Email",
+    regExp: /^[a-zA-Z0-9_!#&+.-]{3,32}@[a-zA-Z0-9.-]{3,32}\.[a-zA-Z]{2,6}$/,
+    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    required: true,
+  },
+  {
+    itemName: "password",
+    inputType: "password",
+    initialValue: "",
+    label: "Password",
+    max: 16,
+    min: 6,
+    regExp: /\S/,
+    regExpWarning: `A mező kitöltése nem megfelelő.`,
+    required: true,
+  },
+];
+
 export const VALIDATION_MESSAGES = {
   max: `Meghaladtad a beírható karakterek maximum mennyiségét.`,
   min: `Nem írtál be elegendő karaktert.`,
-  required: `A mező kitöltése kötelező!`
+  required: `A mező kitöltése kötelező!`,
 };
 
 export const FTextInput = ({ label, ...props }) => {
@@ -108,6 +131,19 @@ export const FTextInput = ({ label, ...props }) => {
     <>
       <label htmlFor={props.id || props.name}>{label}</label>
       <input className="text-input" {...field} {...props} />
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+    </>
+  );
+};
+
+export const CustomPasswordInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <label htmlFor={props.id || props.name}>{label}</label>
+      <input className="text-input" {...field} {...props} type="password" />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
