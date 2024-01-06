@@ -1,0 +1,15 @@
+version: "3"
+services:
+  react-frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: laravel-in-docker-new-react-frontend-1
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./react-frontend:/react-frontend
+    networks:
+      - laravel-in-docker-new-network
+networks:
+  laravel-in-docker-new-network:
