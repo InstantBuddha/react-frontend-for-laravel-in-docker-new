@@ -120,9 +120,7 @@ export default function Signup() {
                 error.response ? error.response.data : error.message
             ); //remove after testing
             //console.log(error.response.status); //remove after testing
-            console.log(error); //remove after testing
             setSubmitting(false);
-            const errorCodeToDisplay = error.response.status
             if(error.response){
                 setErrorCodeToDisplay(error.response.status)
             }            

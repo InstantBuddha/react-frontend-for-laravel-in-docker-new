@@ -80,18 +80,11 @@ function AdminLogin() {
   const handleSubmit = async (credentials, setSubmitting) => {
     try {
       const response = await axiosInstance.post("/auth/login", credentials);
-      console.log("Response:", response); //remove after testing
+      sessionStorage.setItem("token", response.data.authorization.token);
       setSubmitting(false);
       navigate("/view-members");
     } catch (error) {
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      ); //remove after testing
-      //console.log(error.response.status); //remove after testing
-      console.log(error); //remove after testing
       setSubmitting(false);
-      const errorCodeToDisplay = error.response.status;
       if (error.response) {
         setErrorCodeToDisplay(error.response.status);
       }

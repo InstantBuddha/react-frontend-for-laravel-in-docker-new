@@ -1,0 +1,10 @@
+.member-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: 1rem;
+    width: 96%;
+    text-align: left;
+    background-color: rgb(149, 192, 255);
+  }
+  
