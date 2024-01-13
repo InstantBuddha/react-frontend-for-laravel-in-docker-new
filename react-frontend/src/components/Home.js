@@ -16,6 +16,11 @@ function Home() {
                     Go to new Member Registration Form
                 </button>
             </Link>
+            <Link to="/cors-test">
+                <button type="button" className="btn btn-primary">
+                    Go to Basic CORS test
+                </button>
+            </Link>
         </div>
     );
 }

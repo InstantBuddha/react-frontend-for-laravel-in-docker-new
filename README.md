@@ -6,6 +6,8 @@ The Dockerized frontend to work with the APIs of my laravel in docker new reposi
   - [Add necessary libraries](#add-necessary-libraries)
     - [React-bootstrap](#react-bootstrap)
     - [Formik + yup](#formik--yup)
+    - [Redux and protected routes](#redux-and-protected-routes)
+      - [Learn Redux](#learn-redux)
 
 
 ## First run
@@ -29,6 +31,8 @@ npm install react-bootstrap bootstrap
 npm install axios
 npm install formik --save
 npm install yup --save
+npm install react-redux
+npm install @reduxjs/toolkit
 ```
 
 ### React-bootstrap
@@ -43,6 +47,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 Data sanitization needed to be added to ensure empty strings are added as null
 The formik styles needed to be imported separately, css should be modified so that it will be less ugly in the future.
+
+### Redux and protected routes
+
+following this:
+https://dev.to/collins87mbathi/reactjs-protected-route-m3j
+
+**I forgot to add the provider in index.js**
+#### Learn Redux
+
+following this:
+https://www.taniarascia.com/redux-react-guide/
+
+To read later for RDK:
+
+https://redux-toolkit.js.org/introduction/getting-started
+
+
+
+
+
 
 **Formik regular expressions need to be cleaned**
 
