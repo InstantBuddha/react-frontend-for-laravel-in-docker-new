@@ -33,7 +33,7 @@ export const SIGN_UP_FORM_ITEMS = [
     required: true,
   },
   {
-    itemName: "zipCode",
+    itemName: "zipcode",
     inputType: "text",
     initialValue: "",
     label: "Irányítószám",

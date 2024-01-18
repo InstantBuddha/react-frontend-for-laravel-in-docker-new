@@ -147,7 +147,7 @@ export default function Signup() {
       .catch(function (error) {
         console.log(error.response.status); //remove after testing
         setSubmitting(false);
-        if (error.response) {
+        if (error.response.status) {
           navigate(`/failure/${error.response.status}`);
           return;
         }

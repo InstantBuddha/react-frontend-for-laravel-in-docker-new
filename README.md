@@ -31,7 +31,7 @@ npm install react-bootstrap bootstrap
 npm install axios
 npm install formik --save
 npm install yup --save
-npm install react-redux
+npm install redux react-redux
 npm install @reduxjs/toolkit
 ```
 
@@ -50,14 +50,16 @@ The formik styles needed to be imported separately, css should be modified so th
 
 ### Redux and protected routes
 
-following this:
-https://dev.to/collins87mbathi/reactjs-protected-route-m3j
+Originally I used SessionStorage for the token. Now I switched to the Redux state, but kept the original code for SessionStorage if I might want to use that later.
 
-**I forgot to add the provider in index.js**
 #### Learn Redux
 
-following this:
+In the end, I used this:
+https://react-redux.js.org/tutorials/quick-start
+
+useful as well:
 https://www.taniarascia.com/redux-react-guide/
+https://dev.to/collins87mbathi/reactjs-protected-route-m3j
 
 To read later for RDK:
 
@@ -69,7 +71,7 @@ https://redux-toolkit.js.org/introduction/getting-started
 
 
 **Formik regular expressions need to be cleaned**
-
+**FORMIK ZIPCODE NEEDS TO BE MODIFIED TO zipcode NO CAMELCASE!!!!**
 
 
 

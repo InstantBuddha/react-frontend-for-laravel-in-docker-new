@@ -19,7 +19,7 @@ function App() {
           <Route
             path="/view-members"
             element={
-              <ProtectedRoute user={"Hardcoded user"}>
+              <ProtectedRoute>
                 <ViewMembers />
               </ProtectedRoute>
             }

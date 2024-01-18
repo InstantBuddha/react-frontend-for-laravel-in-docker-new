@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import axios from "axios";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -10,10 +9,14 @@ import {
 } from "../../utils/FormStuff";
 import "../../styles/formik-styles.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  setAuthenticationStatus,
+  setToken,
+  setUserName,
+} from "../../redux/slice/userSlice";
 
 function AdminLogin() {
-  const [errorCodeToDisplay, setErrorCodeToDisplay] = useState("Unkown error");
-
   const fInitValues = ADMIN_LOG_IN_FORM_ITEMS.reduce((result, obj) => {
     return { ...result, [obj.itemName]: obj.initialValue };
   }, {});
@@ -67,10 +70,10 @@ function AdminLogin() {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const axiosInstance = axios.create({
     baseURL: "http://localhost/api",
-    //withCredentials: true, // Allow sending cookies when making requests
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -80,15 +83,19 @@ function AdminLogin() {
   const handleSubmit = async (credentials, setSubmitting) => {
     try {
       const response = await axiosInstance.post("/auth/login", credentials);
-      sessionStorage.setItem("token", response.data.authorization.token);
+      dispatch(setAuthenticationStatus(true));
+      dispatch(setUserName(credentials.email));
+      dispatch(setToken(response.data.authorization.token))
+      //sessionStorage.setItem("token", response.data.authorization.token); //if I might want to use it instead of Redux
       setSubmitting(false);
       navigate("/view-members");
     } catch (error) {
       setSubmitting(false);
-      if (error.response) {
-        setErrorCodeToDisplay(error.response.status);
+      if (error.response.status) {
+        navigate(`/failure/${error.response.status}`);
+        return;
       }
-      navigate(`/failure/${errorCodeToDisplay}`);
+      navigate(`/failure/unknown_error`);
     }
   };
 

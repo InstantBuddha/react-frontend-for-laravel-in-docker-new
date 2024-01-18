@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { getWithBearerToken } from "../../services/ApiServices";
 import MemberCard from "./MemberCard";
+import { useSelector } from "react-redux";
 
 function ViewMembers() {
   const [memberArr, setMemberArr] = useState([]);
   const [isDataDownloaded, setIsDataDownloaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isGetSuccessful, setIsgetSuccessful] = useState(null);
+  const userName = useSelector((state) => state.user.userName);
+  const token = useSelector((state) => state.user.token);
 
   const fetchData = async () => {
-    const token = sessionStorage.getItem("token");
+    //const token = sessionStorage.getItem("token");  //if I might want to use it instead of Redux
     await getWithBearerToken(token)
       .then((response) => {
         setMemberArr(response.data.data);
@@ -44,7 +47,8 @@ function ViewMembers() {
 
   return (
     <div>
-      <h1>The members:</h1>
+      <div className="bg-dark text-light float-right"><p className="text-right">Hello, {userName}</p></div>
+      <h1 className="mb-0">The members:</h1>
       <div>
         {isDataDownloaded ? displayContent() : <p>Downloading data...</p>}
       </div>
