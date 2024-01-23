@@ -15,6 +15,7 @@ import {
   setToken,
   setUserName,
 } from "../../redux/slice/userSlice";
+import { AXIOS_CREATE_CONFIG } from "../../services/ApiServices";
 
 function AdminLogin() {
   const fInitValues = ADMIN_LOG_IN_FORM_ITEMS.reduce((result, obj) => {
@@ -72,13 +73,7 @@ function AdminLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const axiosInstance = axios.create({
-    baseURL: "http://localhost/api",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
+  const axiosInstance = axios.create(AXIOS_CREATE_CONFIG);
 
   const handleSubmit = async (credentials, setSubmitting) => {
     try {
@@ -91,7 +86,7 @@ function AdminLogin() {
       navigate("/view-members");
     } catch (error) {
       setSubmitting(false);
-      if (error.response.status) {
+      if (error.response) {
         navigate(`/failure/${error.response.status}`);
         return;
       }

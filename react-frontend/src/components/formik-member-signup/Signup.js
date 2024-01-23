@@ -1,4 +1,3 @@
-//import React, { useState } from "react";
 import axios from "axios";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -10,6 +9,7 @@ import {
 } from "../../utils/FormStuff";
 import "../../styles/formik-styles.css";
 import { useNavigate } from "react-router-dom";
+import { AXIOS_CREATE_CONFIG } from "../../services/ApiServices";
 
 export default function Signup() {
   const fInitValues = SIGN_UP_FORM_ITEMS.reduce((result, obj) => {
@@ -90,52 +90,12 @@ export default function Signup() {
 
   const navigate = useNavigate();
 
-  /*
-    const axiosInstance = axios.create({
-        baseURL: "http://localhost/api",
-        //withCredentials: true, // Allow sending cookies when making requests
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-    });
-
-    const handleSubmit = async (credentials, setSubmitting) => {
-        const sanitizedValues = Object.fromEntries(
-            Object.entries(credentials).filter(([key, value]) => value !== "")
-        );
-
-        try {
-            const response = await axiosInstance.post(
-                "/members",
-                sanitizedValues
-            );
-            console.log("Response:", response); //remove after testing
-            setSubmitting(false);
-            navigate("/success");
-        } catch (error) {
-            console.error(
-                "Error:",
-                error.response ? error.response.data : error.message
-            ); //remove after testing
-            //console.log(error.response.status); //remove after testing
-            setSubmitting(false);
-            if(error.response){
-                setErrorCodeToDisplay(error.response.status)
-            }            
-            navigate(`/failure/${errorCodeToDisplay}`);
-        }
-    };
-    */
-
   const handleSubmit = async (credentials, setSubmitting) => {
     const sanitizedValues = Object.fromEntries(
       Object.entries(credentials).filter(([key, value]) => value !== "")
     );
 
-    const axiosInstance = axios.create({
-      baseURL: "http://localhost/api",
-    });
+    const axiosInstance = axios.create(AXIOS_CREATE_CONFIG);
 
     axiosInstance
       .post("/members", sanitizedValues)
@@ -151,7 +111,7 @@ export default function Signup() {
           navigate(`/failure/${error.response.status}`);
           return;
         }
-        navigate(`/failure/${"Unkown error"}`);
+        navigate(`/failure/${"Unkown_error"}`);
       });
   };
   return (

@@ -8,6 +8,7 @@ The Dockerized frontend to work with the APIs of my laravel in docker new reposi
     - [Formik + yup](#formik--yup)
     - [Redux and protected routes](#redux-and-protected-routes)
       - [Learn Redux](#learn-redux)
+      - [Add Redux Persist](#add-redux-persist)
 
 
 ## First run
@@ -34,7 +35,7 @@ npm install yup --save
 npm install redux react-redux
 npm install @reduxjs/toolkit
 ```
-
+Redux thunk did not seem to have been installed with reduc rtk
 ### React-bootstrap
 
 include in the src/index.js or App.js file
@@ -65,6 +66,11 @@ To read later for RDK:
 
 https://redux-toolkit.js.org/introduction/getting-started
 
+
+#### Add Redux Persist
+
+This does not work:
+https://blog.logrocket.com/persist-state-redux-persist-redux-toolkit-react/
 
 
 

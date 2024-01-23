@@ -47,7 +47,9 @@ function ViewMembers() {
 
   return (
     <div>
-      <div className="bg-dark text-light float-right"><p className="text-right">Hello, {userName}</p></div>
+      <div className="bg-dark text-light">
+        <p className="text-end">Hello, {userName}</p>
+      </div>
       <h1 className="mb-0">The members:</h1>
       <div>
         {isDataDownloaded ? displayContent() : <p>Downloading data...</p>}
