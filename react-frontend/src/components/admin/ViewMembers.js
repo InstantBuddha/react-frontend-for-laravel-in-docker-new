@@ -12,7 +12,6 @@ function ViewMembers() {
   const token = useSelector((state) => state.user.token);
 
   const fetchData = async () => {
-    //const token = sessionStorage.getItem("token");  //if I might want to use it instead of Redux
     await getWithBearerToken(token)
       .then((response) => {
         setMemberArr(response.data.data);

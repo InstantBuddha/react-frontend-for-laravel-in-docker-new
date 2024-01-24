@@ -9,7 +9,10 @@ import {
 } from "../../utils/FormStuff";
 import "../../styles/formik-styles.css";
 import { useNavigate } from "react-router-dom";
-import { AXIOS_CREATE_CONFIG } from "../../services/ApiServices";
+import {
+  AXIOS_CREATE_CONFIG,
+  postMembersRegistration,
+} from "../../services/ApiServices";
 
 export default function Signup() {
   const fInitValues = SIGN_UP_FORM_ITEMS.reduce((result, obj) => {
@@ -97,23 +100,23 @@ export default function Signup() {
 
     const axiosInstance = axios.create(AXIOS_CREATE_CONFIG);
 
-    axiosInstance
-      .post("/members", sanitizedValues)
-      .then(function (response) {
-        console.log("Response:", response); //remove after testing
-        setSubmitting(false);
-        navigate("/success");
-      })
-      .catch(function (error) {
-        console.log(error.response.status); //remove after testing
-        setSubmitting(false);
-        if (error.response.status) {
-          navigate(`/failure/${error.response.status}`);
-          return;
-        }
-        navigate(`/failure/${"Unkown_error"}`);
-      });
+    try {
+      const response = await postMembersRegistration(
+        axiosInstance,
+        sanitizedValues
+      );
+      setSubmitting(false);
+      navigate("/success");
+    } catch (error) {
+      setSubmitting(false);
+      if (error.response.status) {
+        navigate(`/failure/${error.response.status}`);
+        return;
+      }
+      navigate(`/failure/${"Unkown_error"}`);
+    }
   };
+
   return (
     <div className="form-page-container">
       <h1>Jelentkezz!</h1>

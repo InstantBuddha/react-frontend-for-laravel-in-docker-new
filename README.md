@@ -9,6 +9,7 @@ The Dockerized frontend to work with the APIs of my laravel in docker new reposi
     - [Redux and protected routes](#redux-and-protected-routes)
       - [Learn Redux](#learn-redux)
       - [Add Redux Persist](#add-redux-persist)
+    - [Environment variables](#environment-variables)
 
 
 ## First run
@@ -51,7 +52,36 @@ The formik styles needed to be imported separately, css should be modified so th
 
 ### Redux and protected routes
 
-Originally I used SessionStorage for the token. Now I switched to the Redux state, but kept the original code for SessionStorage if I might want to use that later.
+Originally I used SessionStorage for the token. Now I switched to the Redux state, but kept the original code for SessionStorage if I might want to use that later:
+
+In AdminLogin:
+```js
+const handleSubmit = async (credentials, setSubmitting) => {
+    try {
+      const response = await authLogin(axiosInstance, credentials);
+      dispatch(setAuthenticationStatus(true));
+      dispatch(setUserName(credentials.email));
+      dispatch(setToken(response.data.authorization.token))
+      sessionStorage.setItem("token", response.data.authorization.token); //if I might want to use it instead of Redux
+      setSubmitting(false);
+      navigate("/view-members");
+    }
+    //...
+}
+```
+
+In viewMembers:
+```js
+const fetchData = async () => {
+    const token = sessionStorage.getItem("token");  //if I might want to use it instead of Redux
+    await getWithBearerToken(token)
+      .then((response) => {
+        setMemberArr(response.data.data);
+        setIsgetSuccessful(true);
+        setIsDataDownloaded(true);
+      })
+}
+```
 
 #### Learn Redux
 
@@ -72,6 +102,12 @@ https://redux-toolkit.js.org/introduction/getting-started
 This does not work:
 https://blog.logrocket.com/persist-state-redux-persist-redux-toolkit-react/
 
+
+### Environment variables
+
+using this:
+
+https://create-react-app.dev/docs/adding-custom-environment-variables/
 
 
 

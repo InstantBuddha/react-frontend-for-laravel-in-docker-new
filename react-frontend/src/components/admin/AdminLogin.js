@@ -15,7 +15,7 @@ import {
   setToken,
   setUserName,
 } from "../../redux/slice/userSlice";
-import { AXIOS_CREATE_CONFIG } from "../../services/ApiServices";
+import { AXIOS_CREATE_CONFIG, authLogin } from "../../services/ApiServices";
 
 function AdminLogin() {
   const fInitValues = ADMIN_LOG_IN_FORM_ITEMS.reduce((result, obj) => {
@@ -77,11 +77,10 @@ function AdminLogin() {
 
   const handleSubmit = async (credentials, setSubmitting) => {
     try {
-      const response = await axiosInstance.post("/auth/login", credentials);
+      const response = await authLogin(axiosInstance, credentials);
       dispatch(setAuthenticationStatus(true));
       dispatch(setUserName(credentials.email));
-      dispatch(setToken(response.data.authorization.token))
-      //sessionStorage.setItem("token", response.data.authorization.token); //if I might want to use it instead of Redux
+      dispatch(setToken(response.data.authorization.token));
       setSubmitting(false);
       navigate("/view-members");
     } catch (error) {
