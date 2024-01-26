@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getWithBearerToken } from "../../services/ApiServices";
+import { getWithBearerToken, logUserOut } from "../../services/ApiServices";
 import MemberCard from "./MemberCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setAuthenticationStatus,
+  setToken,
+  setUserName,
+} from "../../redux/slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function ViewMembers() {
   const [memberArr, setMemberArr] = useState([]);
@@ -10,6 +16,8 @@ function ViewMembers() {
   const [isGetSuccessful, setIsgetSuccessful] = useState(null);
   const userName = useSelector((state) => state.user.userName);
   const token = useSelector((state) => state.user.token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     await getWithBearerToken(token)
@@ -23,10 +31,10 @@ function ViewMembers() {
         setIsDataDownloaded(true);
 
         if (error.response.status) {
-          setErrorMessage(error.response.status);
+          setErrorMessage(`Error downloading information: Error ${error.response.status}`);
           return;
         }
-        setErrorMessage(" Unknown error");
+        setErrorMessage(`Unknown error downloading information`);
       });
   };
 
@@ -35,19 +43,43 @@ function ViewMembers() {
     return () => {};
   }, []);
 
+  const logOut = async () => {
+    await logUserOut(token)
+      .then((response) => {
+        dispatch(setAuthenticationStatus(false));
+        dispatch(setUserName(null));
+        dispatch(setToken(null));
+        navigate("/"); //at this point the user gets redirected anyway, but just in case
+      })
+      .catch((error) => {
+        if (error.response.status) {
+          setErrorMessage(`Error logging out: Error ${error.response.status}`);
+          return;
+        }
+        setErrorMessage(`Unknoen error logging out`);
+      });
+  };
+
   const displayContent = () => {
-    if (isGetSuccessful) {
+    if (isGetSuccessful && !errorMessage) {
       return memberArr.map((memberData) => (
         <MemberCard key={memberData.id} memberData={memberData} />
       ));
     }
-    return <p>Error downloading information: Error {errorMessage}</p>;
+    return <p>{errorMessage}</p>;
   };
 
   return (
     <div>
-      <div className="bg-dark text-light">
-        <p className="text-end">Hello, {userName}</p>
+      <div className="d-flex justify-content-end bg-dark text-light">
+        <div className="p-2">
+          <p>Hello, {userName}</p>
+        </div>
+        <div className="p-2">
+          <button type="button" className="btn btn-primary" onClick={logOut}>
+            Log out
+          </button>
+        </div>
       </div>
       <h1 className="mb-0">The members:</h1>
       <div>

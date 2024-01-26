@@ -10,6 +10,8 @@ export const AXIOS_CREATE_CONFIG = {
   },
 };
 
+export const mainAxiosInstance = axios.create(AXIOS_CREATE_CONFIG);
+
 export async function getWithBearerToken(token) {
   const apiUrl = `${API_BASE_URL}/members`;
   const config = {
@@ -19,14 +21,23 @@ export async function getWithBearerToken(token) {
   return axios.get(apiUrl, config);
 }
 
-export async function authLogin(axiosInstance, credentials) {
+export async function authLogin(credentials) {
   const apiUrl = `${API_BASE_URL}/auth/login`;
 
-  return axiosInstance.post(apiUrl, credentials);
+  return mainAxiosInstance.post(apiUrl, credentials);
 }
 
-export async function postMembersRegistration(axiosInstance, sanitizedValues) {
+export async function logUserOut(token) {
+  const apiUrl = `${API_BASE_URL}/auth/logout`;
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  return mainAxiosInstance.post(apiUrl, null, config);
+}
+
+export async function postMembersRegistration(sanitizedValues) {
   const apiUrl = `${API_BASE_URL}/members`;
 
-  return axiosInstance.post(apiUrl, sanitizedValues);
+  return mainAxiosInstance.post(apiUrl, sanitizedValues);
 }

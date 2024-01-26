@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import {
@@ -15,7 +14,7 @@ import {
   setToken,
   setUserName,
 } from "../../redux/slice/userSlice";
-import { AXIOS_CREATE_CONFIG, authLogin } from "../../services/ApiServices";
+import { authLogin } from "../../services/ApiServices";
 
 function AdminLogin() {
   const fInitValues = ADMIN_LOG_IN_FORM_ITEMS.reduce((result, obj) => {
@@ -73,11 +72,9 @@ function AdminLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const axiosInstance = axios.create(AXIOS_CREATE_CONFIG);
-
   const handleSubmit = async (credentials, setSubmitting) => {
     try {
-      const response = await authLogin(axiosInstance, credentials);
+      const response = await authLogin(credentials);
       dispatch(setAuthenticationStatus(true));
       dispatch(setUserName(credentials.email));
       dispatch(setToken(response.data.authorization.token));

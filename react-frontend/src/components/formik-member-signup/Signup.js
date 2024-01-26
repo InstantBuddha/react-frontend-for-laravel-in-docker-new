@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import {
@@ -9,10 +8,7 @@ import {
 } from "../../utils/FormStuff";
 import "../../styles/formik-styles.css";
 import { useNavigate } from "react-router-dom";
-import {
-  AXIOS_CREATE_CONFIG,
-  postMembersRegistration,
-} from "../../services/ApiServices";
+import { postMembersRegistration } from "../../services/ApiServices";
 
 export default function Signup() {
   const fInitValues = SIGN_UP_FORM_ITEMS.reduce((result, obj) => {
@@ -98,13 +94,8 @@ export default function Signup() {
       Object.entries(credentials).filter(([key, value]) => value !== "")
     );
 
-    const axiosInstance = axios.create(AXIOS_CREATE_CONFIG);
-
     try {
-      const response = await postMembersRegistration(
-        axiosInstance,
-        sanitizedValues
-      );
+      await postMembersRegistration(sanitizedValues);
       setSubmitting(false);
       navigate("/success");
     } catch (error) {
