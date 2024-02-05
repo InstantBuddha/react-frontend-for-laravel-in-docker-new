@@ -25,6 +25,22 @@ export default function BasicCorsTest() {
       });
   };
 
+  const ping = () => {
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost/api",
+      //withCredentials: true,  // not needed, furthermore it should be FALSE!!! maybe only with https
+    });
+
+    axiosInstance
+      .get("/ping")
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   const dispatch = useDispatch();
   const TEST_USER_CREDENTIALS = {
     email: "testerone@example.com",
@@ -80,6 +96,10 @@ export default function BasicCorsTest() {
       <h1>BasicCorsTest</h1>
       <button type="button" className="btn btn-primary" onClick={corsTestOnly}>
         CORS test only
+      </button>
+
+      <button type="button" className="btn btn-primary" onClick={ping}>
+        Ping
       </button>
       <button
         type="button"
