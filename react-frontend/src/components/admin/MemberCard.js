@@ -5,7 +5,7 @@ function MemberCard({ memberData }) {
   const tableRows = Object.entries(memberData).map(([key, value]) => (
     <tr key={key}>
       <td>{key}</td>
-      <td>{value}</td>
+      <td>{typeof value === "boolean" ? value.toString() : value}</td>
     </tr>
   ));
 

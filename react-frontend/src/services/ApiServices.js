@@ -37,7 +37,7 @@ export async function logUserOut(token) {
 }
 
 export async function postMembersRegistration(sanitizedValues) {
-  const apiUrl = `${API_BASE_URL}/members`;
+  const apiUrl = `${API_BASE_URL}/register-new-member`;
 
   return mainAxiosInstance.post(apiUrl, sanitizedValues);
 }

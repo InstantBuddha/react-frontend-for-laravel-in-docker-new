@@ -77,7 +77,7 @@ function AdminLogin() {
       const response = await authLogin(credentials);
       dispatch(setAuthenticationStatus(true));
       dispatch(setUserName(credentials.email));
-      dispatch(setToken(response.data.authorization.token));
+      dispatch(setToken(response.data.token));
       setSubmitting(false);
       navigate("/view-members");
     } catch (error) {

@@ -85,7 +85,7 @@ export const SIGN_UP_FORM_ITEMS = [
     requiredWarning: `Az adatkezelési hozzájárulás elfogadása kötelező.`,
   },
   {
-    itemName: "mailing_list",
+    itemName: "is_subscribed_to_mailing_list",
     inputType: "checkbox",
     initialValue: false,
     label: `Igényt tartok arra, hogy a OurOrganization részemre tájékoztató hírlevelet küldjön az általam megadott email címre.`,

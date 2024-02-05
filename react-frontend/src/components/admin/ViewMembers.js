@@ -56,7 +56,7 @@ function ViewMembers() {
           setErrorMessage(`Error logging out: Error ${error.response.status}`);
           return;
         }
-        setErrorMessage(`Unknoen error logging out`);
+        setErrorMessage(`Unknown error logging out`);
       });
   };
 

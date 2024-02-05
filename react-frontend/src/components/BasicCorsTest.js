@@ -40,10 +40,11 @@ export default function BasicCorsTest() {
   const handleSubmit = async (credentials) => {
     try {
       const response = await authLogin(credentials);
+      //console.log(response);
       dispatch(setAuthenticationStatus(true));
       dispatch(setUserName(credentials.email));
-      dispatch(setToken(response.data.authorization.token));
-      console.log(response.data.authorization.token);
+      dispatch(setToken(response.data.token));
+      console.log(response.data.token);
     } catch (error) {
       console.log(error);
     }
