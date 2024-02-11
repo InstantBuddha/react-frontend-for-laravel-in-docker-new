@@ -1,15 +1,20 @@
 import { useField } from "formik";
 
+const STANDARD_REGEX_ERROR_MSG = `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`;
+
+const REGEX_NO_ANGLE_BRACKETS = /^(?!.*(?:<|>|&lt;|&gt;)).*$/;
+
 export const SIGN_UP_FORM_ITEMS = [
   {
     itemName: "name",
     inputType: "text",
     initialValue: "",
     label: "Név",
+    placeholder: "Pl: John Doe",
     max: 30,
-    min: 5,
-    regExp: /^(?=[\p{L}. -]{5,30}$)(?!(?:.*[.-]){2})\p{L}.*\p{L}[.\p{L} -]*$/u,
-    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    min: 8,
+    regExp: REGEX_NO_ANGLE_BRACKETS,
+    regExpWarning: STANDARD_REGEX_ERROR_MSG,
     required: true,
   },
   {
@@ -17,8 +22,10 @@ export const SIGN_UP_FORM_ITEMS = [
     inputType: "email",
     initialValue: "",
     label: "Email",
-    regExp: /^[a-zA-Z0-9_!#&+.-]{3,32}@[a-zA-Z0-9.-]{3,32}\.[a-zA-Z]{2,6}$/,
-    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    placeholder: "Pl: john.doe@example.com",
+    min: 8,
+    //regExp: /^[a-zA-Z0-9_!#&+.-]{3,32}@[a-zA-Z0-9.-]{3,32}\.[a-zA-Z]{2,6}$/,
+    regExpWarning: STANDARD_REGEX_ERROR_MSG,
     required: true,
   },
   {
@@ -26,9 +33,10 @@ export const SIGN_UP_FORM_ITEMS = [
     inputType: "text",
     initialValue: "",
     label: "Mobil",
-    max: 16,
-    min: 10,
-    regExp: /^\d{10,16}$/,
+    placeholder: "Pl: 0036301234567",
+    max: 20,
+    min: 7,
+    regExp: /^\d{7,20}$/,
     regExpWarning: `A mező kitöltése nem megfelelő. Csak számokat használj, szóköz és más karakterek nélkül!`,
     required: true,
   },
@@ -37,10 +45,11 @@ export const SIGN_UP_FORM_ITEMS = [
     inputType: "text",
     initialValue: "",
     label: "Irányítószám",
-    max: 10,
+    placeholder: "Pl: 1234",
+    max: 15,
     min: 4,
-    regExp: /^[A-Za-z0-9 -]{4,10}$/,
-    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    regExp: /^[A-Za-z0-9 -]{4,15}$/,
+    regExpWarning: STANDARD_REGEX_ERROR_MSG,
     required: false,
   },
   {
@@ -48,10 +57,11 @@ export const SIGN_UP_FORM_ITEMS = [
     inputType: "text",
     initialValue: "",
     label: "Település",
-    max: 20,
+    placeholder: "Pl: Budapest",
+    max: 40,
     min: 2,
     regExp: /^[\p{L}'\-.\s]{2,20}$/u,
-    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    regExpWarning: STANDARD_REGEX_ERROR_MSG,
     required: false,
   },
   {
@@ -59,10 +69,11 @@ export const SIGN_UP_FORM_ITEMS = [
     inputType: "text",
     initialValue: "",
     label: "Cím",
+    placeholder: "Pl: Fő utca 1. I. em. 3.",
     max: 40,
     min: 5,
     regExp: /^(?=.*\p{L})[a-zA-Z0-9\p{L}.,/'\-\s]{5,40}$/u,
-    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    regExpWarning: STANDARD_REGEX_ERROR_MSG,
     required: false,
   },
   {
@@ -70,10 +81,11 @@ export const SIGN_UP_FORM_ITEMS = [
     inputType: "text",
     initialValue: "",
     label: "Megjegyzés",
+    placeholder: "",
     max: 100,
     min: 5,
     regExp: /^[0-9\p{L}.,:!?\s]{5,100}$/u,
-    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    regExpWarning: STANDARD_REGEX_ERROR_MSG,
     required: false,
   },
   {
@@ -100,7 +112,7 @@ export const ADMIN_LOG_IN_FORM_ITEMS = [
     initialValue: "",
     label: "Email",
     regExp: /^[a-zA-Z0-9_!#&+.-]{3,32}@[a-zA-Z0-9.-]{3,32}\.[a-zA-Z]{2,6}$/,
-    regExpWarning: `A mező kitöltése nem megfelelő. Lehet nem megengedett speciális karaktereket használtál?`,
+    regExpWarning: STANDARD_REGEX_ERROR_MSG,
     required: true,
   },
   {

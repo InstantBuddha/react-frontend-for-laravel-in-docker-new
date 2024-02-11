@@ -36,6 +36,7 @@ export default function Signup() {
         ...result,
         [item.itemName]: Yup.string()
           .email(item.regExpWarning)
+          .min(item.min, VALIDATION_MESSAGES.min)
           .required(VALIDATION_MESSAGES.required),
       };
     }
@@ -54,24 +55,14 @@ export default function Signup() {
   }, {});
 
   const formInputs = SIGN_UP_FORM_ITEMS.map((item) => {
-    if (item.inputType === "text") {
+    if (item.inputType === "email" || item.inputType === "text") {
       return (
         <FTextInput
           key={item.itemName}
-          label={item.label}
+          label={item.required ? `${item.label} *` : item.label}
           name={item.itemName}
-          type="text"
-        />
-      );
-    }
-
-    if (item.inputType === "email") {
-      return (
-        <FTextInput
-          key={item.itemName}
-          label={item.label}
-          name={item.itemName}
-          type="email"
+          placeholder={item.placeholder}
+          type={item.inputType}
         />
       );
     }
@@ -100,7 +91,7 @@ export default function Signup() {
       navigate("/success");
     } catch (error) {
       setSubmitting(false);
-      if (error.response.status) {
+      if (error?.response?.status) {
         navigate(`/failure/${error.response.status}`);
         return;
       }
@@ -119,6 +110,7 @@ export default function Signup() {
         }}
       >
         <Form>
+          <div>A *-al jelölt elemek megadása kötelező</div>
           {formInputs}
           <button type="submit">Jelentkezés elküldése</button>
         </Form>
