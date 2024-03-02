@@ -9,6 +9,7 @@ import {
 import "../../styles/formik-styles.css";
 import { useNavigate } from "react-router-dom";
 import { postMembersRegistration } from "../../services/ApiServices";
+import HelmetMetaData from "../HelmetMetaData";
 
 export default function Signup() {
   const fInitValues = SIGN_UP_FORM_ITEMS.reduce((result, obj) => {
@@ -99,8 +100,15 @@ export default function Signup() {
     }
   };
 
+  const uniqueHelmetMetaData = {
+    title: "React Frontend for Laravel in Docker New | Signup Test",
+    description: "This is a basic Signup page",
+    type: "webapp",
+  };
+
   return (
     <div className="form-page-container">
+    <HelmetMetaData {...uniqueHelmetMetaData} />
       <h1>Jelentkezz!</h1>
       <Formik
         initialValues={fInitValues}

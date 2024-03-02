@@ -10,6 +10,7 @@ The Dockerized frontend to work with the APIs of my laravel in docker new reposi
       - [Learn Redux](#learn-redux)
       - [Add Redux Persist](#add-redux-persist)
     - [Environment variables](#environment-variables)
+  - [React Helmet](#react-helmet)
 
 
 ## First run
@@ -110,7 +111,121 @@ using this:
 https://create-react-app.dev/docs/adding-custom-environment-variables/
 
 
+## React Helmet
 
+Install it:
+
+``` bash
+docker exec -it laravel-in-docker-new-react-frontend-1 sh
+npm i react-helmet-async
+```
+
+In App.js, everything needs to be wrapped inside HelmetProvider
+
+``` javascript
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import Home from "./components/Home";
+import ViewMembers from "./components/admin/ViewMembers";
+import Signup from "./components/formik-member-signup/Signup";
+import Success from "./components/formik-member-signup/Success";
+import Failure from "./components/formik-member-signup/Failure";
+import AdminLogin from "./components/admin/AdminLogin";
+import BasicCorsTest from "./components/BasicCorsTest";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+
+function App() {  
+  const helmetContext = {};
+  return (
+    <HelmetProvider context={helmetContext}>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<AdminLogin />} />
+            <Route
+              path="/view-members"
+              element={
+                <ProtectedRoute>
+                  <ViewMembers />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/member-registration" element={<Signup />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/failure/:errorCode" element={<Failure />} />
+            <Route path="/cors-test" element={<BasicCorsTest />} />
+          </Routes>
+        </div>
+      </Router>
+    </HelmetProvider>
+  );
+}
+
+export default App;
+```
+
+After that, a HelmetMetaData.js can be created
+
+``` javascript
+import React from "react";
+import { Helmet } from "react-helmet-async";
+
+export default function HelmetMetaData({ title, description, type}) {
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:type" content={type} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+    </Helmet>
+  );
+}
+
+```
+
+And it can be added to every component, for example to Home.js:
+
+``` javascript
+import React from "react";
+import { Link } from "react-router-dom";
+import HelmetMetaData from "./HelmetMetaData";
+
+function Home() {
+  const uniqueHelmetMetaData = {
+    title: "React Frontend for Laravel in Docker New | Home Page",
+    description: "This is the home page",
+    type: "webapp",
+  };
+
+  return (
+    <div>
+      <HelmetMetaData {...uniqueHelmetMetaData} />
+      <h1>This is Home</h1>
+
+      <Link to="/login">
+        <button type="button" className="btn btn-primary">
+          Go to Admin User Login
+        </button>
+      </Link>
+      <Link to="/member-registration">
+        <button type="button" className="btn btn-primary">
+          Go to new Member Registration Form
+        </button>
+      </Link>
+      <Link to="/cors-test">
+        <button type="button" className="btn btn-primary">
+          Go to Basic CORS test
+        </button>
+      </Link>
+    </div>
+  );
+}
+export default Home;
+
+```
 
 **Formik regular expressions need to be cleaned**
 **FORMIK ZIPCODE NEEDS TO BE MODIFIED TO zipcode NO CAMELCASE!!!!**

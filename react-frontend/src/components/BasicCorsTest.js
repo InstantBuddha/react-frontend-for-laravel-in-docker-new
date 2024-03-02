@@ -7,6 +7,7 @@ import {
   setUserName,
 } from "../redux/slice/userSlice";
 import { API_BASE_URL } from "../services/ApiServices";
+import HelmetMetaData from "./HelmetMetaData";
 
 export default function BasicCorsTest() {
   const corsTestOnly = () => {
@@ -39,7 +40,7 @@ export default function BasicCorsTest() {
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   const dispatch = useDispatch();
   const TEST_USER_CREDENTIALS = {
@@ -91,8 +92,15 @@ export default function BasicCorsTest() {
       });
   };
 
+  const uniqueHelmetMetaData = {
+    title: "React Frontend for Laravel in Docker New | Basic CORS Test",
+    description: "This is a basic CORS test",
+    type: "webapp",
+  };
+
   return (
     <div>
+      <HelmetMetaData {...uniqueHelmetMetaData} />
       <h1>BasicCorsTest</h1>
       <button type="button" className="btn btn-primary" onClick={corsTestOnly}>
         CORS test only
